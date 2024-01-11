@@ -147,7 +147,7 @@ class GenshinView extends StatefulWidget {
                       textAlign: TextAlign.end,
                       overflow: TextOverflow.ellipsis,
                       style: fontBold.copyWith(
-                        fontSize: 16.0,
+                        fontSize: 18.0,
                       ),
                     ),
                   )

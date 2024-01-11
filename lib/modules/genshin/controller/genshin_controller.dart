@@ -33,7 +33,7 @@ class GenshinController extends State<GenshinView> {
         }
         break;
       case "abbyssClear":
-        if (abbyssClear < 10) {
+        if (abbyssClear < 5) {
           setState(() {
             abbyssClear++;
             abbyssIncome = abbyssStars * abbyssClear * abbyssPerFloor;
