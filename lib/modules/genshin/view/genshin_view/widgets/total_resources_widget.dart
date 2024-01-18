@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gaculator/modules/genshin/controller/genshin_controller.dart';
+import 'package:gaculator/utils/utils.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/fonts.dart';
@@ -6,33 +8,49 @@ import '../../../../../constants/fonts.dart';
 class GTotalResource extends StatelessWidget {
   const GTotalResource({
     super.key,
+    required this.controller,
   });
+
+  final GenshinController controller;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        color: backgroundColor2,
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 35),
-        child: Column(
-          children: [
-            Text(
-              "18.900",
-              style: fontBold.copyWith(
-                fontSize: 40,
-                color: orangeColor,
-              ),
+    return Container(
+      color: backgroundColor2,
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 35),
+      child: Column(
+        children: [
+          Text(
+            Utils().numFormatter.format(controller.savingOverall),
+            style: fontBold.copyWith(
+              fontSize: 40,
+              color: orangeColor,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
               children: [
-                Text("145x Pulls", style: fontMedium.copyWith(fontSize: 12.0)),
-                Text("Primogems", style: fontRegular.copyWith(fontSize: 12.0)),
-                Text("4.5 Pities", style: fontMedium.copyWith(fontSize: 12.0)),
+                Positioned(
+                  child: Text(
+                    "${controller.overallPulls}x Pulls",
+                    style: fontMedium.copyWith(fontSize: 12.0),
+                  ),
+                ),
+                Center(
+                  child: Text("Primogems", style: fontRegular.copyWith(fontSize: 12.0)),
+                ),
+                Positioned(
+                  right: 0,
+                  child: Text(
+                    "${controller.pitiesOverall.toStringAsFixed(1)} Pity(s)",
+                    style: fontMedium.copyWith(fontSize: 12.0),
+                  ),
+                ),
               ],
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -18,7 +18,7 @@ class SplashView extends StatefulWidget {
             height: 128,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('splash_logo.png'),
+                image: AssetImage('assets/splash_logo.png'),
               ),
             ),
           ),

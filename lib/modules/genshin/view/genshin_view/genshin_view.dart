@@ -5,10 +5,12 @@ import 'package:gaculator/modules/genshin/controller/genshin_controller.dart';
 import 'package:gaculator/constants/fonts.dart';
 import 'package:gaculator/modules/genshin/view/genshin_view/widgets/total_resources_widget.dart';
 import 'package:gaculator/modules/genshin/view/genshin_view/widgets/welkin_button.dart';
+import 'package:gaculator/utils/utils.dart';
 
-import 'widgets/amount_button.dart';
 import 'widgets/date_picker_section.dart';
 import 'widgets/appbar.dart';
+import 'widgets/income_tile.dart';
+import 'widgets/spiral_abbyss_tile.dart';
 
 class GenshinView extends StatefulWidget {
   const GenshinView({super.key});
@@ -31,127 +33,81 @@ class GenshinView extends StatefulWidget {
               child: Text("Genshin Impact", style: fontMedium),
             ),
           ),
-          const GTotalResource(),
-          const GDatePicker(),
+          GTotalResource(controller: controller),
+          GDatePicker(controller: controller),
           // const Divider(),
           WelkinButton(
-            icon: controller.isActive ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,
-            boxColor: primaryColor.withOpacity(controller.isActive ? 1 : .6),
-            textColor: textColor.withOpacity(controller.isActive ? 1 : .6),
-            iconColor: controller.isActive ? greenColor : redColor,
+            icon: controller.isWelkinActive ? FontAwesomeIcons.check : FontAwesomeIcons.xmark,
+            boxColor: primaryColor.withOpacity(controller.isWelkinActive ? 1 : .6),
+            textColor: textColor.withOpacity(controller.isWelkinActive ? 1 : .6),
+            iconColor: controller.isWelkinActive ? greenColor : redColor,
             onTap: () {
               controller.welkinSwitch();
             },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 8,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Clear Stars",
-                                style: fontRegular,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Spiral Abbys",
-                                style: fontBold,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Clear Times",
-                                style: fontRegular,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              AmountButton(
-                                onTap: () => controller.increaseAmout("abbyssStars"),
-                                text: "+",
-                                color: greenColor,
-                              ),
-                              const SizedBox(height: 10),
-                              AmountButton(
-                                onTap: () => controller.increaseAmout("abbyssClear"),
-                                text: "+",
-                                color: greenColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              Text(
-                                controller.abbyssStars.toString(),
-                                style: fontBold.copyWith(
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                              const SizedBox(height: 30),
-                              Text(
-                                controller.abbyssClear.toString(),
-                                style: fontBold.copyWith(
-                                  fontSize: 20.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              AmountButton(
-                                onTap: () => controller.decreaseAmout("abbyssStars"),
-                                text: "-",
-                                color: redColor,
-                              ),
-                              const SizedBox(height: 10),
-                              AmountButton(
-                                onTap: () => controller.decreaseAmout("abbyssClear"),
-                                text: "-",
-                                color: redColor,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      controller.abbyssIncome.toString(),
-                      textAlign: TextAlign.end,
-                      overflow: TextOverflow.ellipsis,
-                      style: fontBold.copyWith(
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  )
-                ],
+          SpiralAbbysTile(
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Paimon Shop",
+            value: "paimonShop",
+            total: Utils().numFormatter.format(controller.paimonShop['total']),
+            amount: controller.paimonShop['amount'].toString(),
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Battle Pass",
+            value: "battlePass",
+            total: Utils().numFormatter.format(controller.battlePass['total']),
+            amount: controller.battlePass['amount'].toString(),
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Stream Codes",
+            value: "streamCodes",
+            total: Utils().numFormatter.format(controller.streamCodes['total']),
+            amount: controller.streamCodes['amount'].toString(),
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Maintenance Comp",
+            value: "mtCompensation",
+            total: Utils().numFormatter.format(controller.mtCompensation['total']),
+            amount: controller.mtCompensation['amount'].toString(),
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Bug Compensation",
+            value: "bugCompensation",
+            total: Utils().numFormatter.format(controller.bugCompensation['total']),
+            amount: controller.bugCompensation['amount'].toString(),
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Main Event",
+            value: "mainEvent",
+            total: Utils().numFormatter.format(controller.mainEvent['total']),
+            amount: controller.mainEvent['amount'].toString(),
+            controller: controller,
+          ),
+          IncomeTile(
+            title: "Normal Events",
+            value: "normalEvents",
+            total: Utils().numFormatter.format(controller.normalEvents['total']),
+            amount: controller.normalEvents['amount'].toString(),
+            controller: controller,
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(12),
+            color: primaryColor,
+            child: Center(
+              child: Text(
+                "©2024 Genshin Impact Primogems Calc",
+                style: fontRegular.copyWith(
+                  fontSize: 12.0,
+                  color: textColor.withOpacity(.7),
+                ),
               ),
             ),
           ),
