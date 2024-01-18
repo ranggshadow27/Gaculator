@@ -1,6 +1,7 @@
 # gaculator
 
-A new Flutter project.
+A Flutter project.
+Genshin Impact Primogems Calculator. Just a Simple App ~
 
 ## Getting Started
 
