@@ -261,7 +261,8 @@ class GenshinController extends State<GenshinView> {
     if (val != null && val.length == 2) {
       setState(() {
         dates = val;
-        daysTotal = val[1]!.day - val[0]!.day;
+        daysTotal = val[1]!.difference(val[0]!).inDays;
+
         countDailyCommision();
         countOverallSaving();
       });
@@ -306,7 +307,7 @@ class GenshinController extends State<GenshinView> {
           currentResource['primogems'];
 
       overallPulls = currentResource['fates'] + ((savingOverall / 160).floor());
-      pitiesOverall = currentResource['pities'] + overallPulls / 75;
+      pitiesOverall = (currentResource['pities'] + overallPulls) / 75;
     });
   }
 
